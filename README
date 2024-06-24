@@ -19,4 +19,4 @@ $driver = new Driver('<YOUR_HOST>');
 $result = $driver->withCredentials('<YOUR_API_KEY>', '<YOUR_API_SECRET>')
     ->sendRequest(Message::new('<RECIPIENT_PHONE_NUMBER>', 'Enoyer - Message from [nghcorp] PHP driver')
         ->from('My App'));
-```a
+```
