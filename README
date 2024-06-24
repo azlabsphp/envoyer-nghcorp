@@ -1,6 +1,6 @@
 # Envoyer - NGHCORP driver
 
-This package provide `drewlabs/envoyer` driver for sending message using NGHCORP [https://nghcorp.net] messages API gateway.
+This package provide `drewlabs/envoyer` driver for sending message using NGHCORP [https://nghcorp.info/] messages API gateway.
 
 ## Usage
 
