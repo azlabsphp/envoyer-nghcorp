@@ -1,0 +1,22 @@
+# Envoyer - NGHCORP driver
+
+This package provide `drewlabs/envoyer` driver for sending message using NGHCORP [https://nghcorp.net] messages API gateway.
+
+## Usage
+
+The library offer a simplement interface for sending message through the `sendRequest` method as follow:
+
+```php
+use Drewlabs\Envoyer\Drivers\NGHCorp\Driver;
+use Drewlabs\Envoyer\Message;
+
+// Register package using composer autoloader
+// require __DIR__ . '/../vendor/autoload.php';
+
+
+$driver = new Driver('<YOUR_HOST>');
+
+$result = $driver->withCredentials('<YOUR_API_KEY>', '<YOUR_API_SECRET>')
+    ->sendRequest(Message::new('<RECIPIENT_PHONE_NUMBER>', 'Enoyer - Message from [nghcorp] PHP driver')
+        ->from('My App'));
+```a

@@ -1,0 +1,31 @@
+{
+    "name": "drewlabs/envoyer-nghcorp",
+    "description": "NGHCORP HTTP Api envoyer driver sdk",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": ">=6.0",
+        "drewlabs/envoyer": "^0.2.4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Drewlabs\\Envoyer\\Drivers\\NGHCorp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "azandrew-sidoine",
+            "email": "azandrewdevelopper@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.0|^8.0",
+        "drewlabs/envoyer-contracts": "^0.2.4",
+        "drewlabs/curl-client": "^0.4.0"
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    }
+}
