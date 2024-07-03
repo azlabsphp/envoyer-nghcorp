@@ -67,6 +67,21 @@ class Driver implements ClientInterface
 
 
     /**
+     * Copy the current instance and modify the callback url property
+     * 
+     * @param string|callable $url
+     *  
+     * @return static 
+     */
+    public function withCallbackUrl($url)
+    {
+        $self = clone $this;
+        $self->callback_url = $url;
+        return $self;
+    }
+
+
+    /**
      * Override instance api key and secret properties
      * 
      * **Note** It creates a copy of the instance using
