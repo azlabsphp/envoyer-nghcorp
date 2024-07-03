@@ -26,33 +26,43 @@ class Driver implements ClientInterface
     /** @var Curl */
     private $curl;
 
+    /** @var string|callable */
+    private $callback_url;
+
     /**
      * Creates new NGHCorp envoyer driver instance
      * 
      * @param string $endpoint 
      * @param string|null $apiKey 
      * @param string|null $apiSecret 
+     * @param null|string|callable $callback_url
      */
-    public function __construct(string $endpoint, string $apiKey = null, string $apiSecret = null)
+    public function __construct(string $endpoint, string $apiKey = null, string $apiSecret = null, $callback_url = null)
     {
         $this->endpoint = $endpoint;
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
         $this->curl = new Curl(rtrim($endpoint, '/'));
+        $this->callback_url = $callback_url;
     }
 
 
     /**
      * Creates new `NGHCorp` envoyer driver instance
      * 
+     * **Note** If the callback_url is a function the function is
+     *          invoked on the notification instance as parameter.
+     * 
      * @param string $endpoint 
      * @param string|null $apiKey 
-     * @param string|null $apiSecret 
+     * @param string|null $apiSecret
+     * @param null|string|callable $callback_url
+     * 
      * @return static 
      */
-    public static function new(string $endpoint, string $apiKey = null, string $apiSecret = null)
+    public static function new(string $endpoint, string $apiKey = null, string $apiSecret = null, $callback_url = null)
     {
-        return new static($endpoint, $apiKey, $apiSecret);
+        return new static($endpoint, $apiKey, $apiSecret, $callback_url);
     }
 
 
@@ -81,13 +91,21 @@ class Driver implements ClientInterface
             throw new InvalidCredentialsException("Authorization credentials was not provided. Please call the withCredentials() to pass in the api key and secret variables.");
         }
 
+        $callback = is_callable($this->callback_url) ? call_user_func($this->callback_url, $instance) : $this->callback_url;
+
         $response = $this->sendHTTPRequest($this->curl, '/api/send-sms', 'POST', [
             "from" => $instance->getSender()->__toString(),
             "to" => $instance->getReceiver()->__toString(),
             "text" => strval($instance->getContent()),
             "reference" => $instance->id() ?? uniqid(time()),
             "api_key" => $this->apiKey,
-            "api_secret" => $this->apiSecret
+            "api_secret" => $this->apiSecret,
+
+            // Those keys are only based on assumption
+            // In future release, the source code will be updated with
+            // the required query parameter
+            "notify_url" => $callback,
+            "callback" => $callback
         ], [
             'Content-Type' => 'application/json'
         ]);
