@@ -22,7 +22,7 @@
     "require": {
         "php": "^7.0|^8.0",
         "drewlabs/envoyer-contracts": "^0.2.4",
-        "drewlabs/curl-client": "^0.3.0|^0.4.0"
+        "drewlabs/curl-client": "^0.4.0"
     },
     "config": {
         "sort-packages": true,
